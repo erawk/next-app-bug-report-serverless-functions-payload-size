@@ -1,6 +1,6 @@
 import { User } from '@prisma/client'
 import { GetStaticPropsContext } from 'next'
-import prisma from '../lib/database/prismaClient'
+import prisma from '../../lib/database/prismaClient'
 
 export const getStaticProps = async (context: GetStaticPropsContext) => {
   const id = (context.params as { id: string }).id
