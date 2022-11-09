@@ -1,8 +1,21 @@
 import { User } from '@prisma/client'
-import { GetStaticPropsContext } from 'next'
+import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next'
 import prisma from '../../lib/database/prismaClient'
 
-export const getStaticProps = async (context: GetStaticPropsContext) => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const users = await prisma.user.findMany({ select: { id: true } })
+
+  return {
+    paths: users.map((user) => {
+      return { params: { id: user.id.toString() } }
+    }),
+    fallback: 'blocking',
+  }
+}
+
+export const getStaticProps: GetStaticProps = async (
+  context: GetStaticPropsContext,
+) => {
   const id = (context.params as { id: string }).id
   const user = await prisma.user.findFirst({ where: { id: parseInt(id, 10) } })
 
