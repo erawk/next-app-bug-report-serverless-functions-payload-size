@@ -3,6 +3,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "next:info": "next info",
+    "postbuild": "sh postbuild.sh",
     "start": "next start"
   },
   "dependencies": {
